@@ -1,6 +1,0 @@
-@my_games_list_back_HostAddress = http://localhost:5199
-
-GET {{my_games_list_back_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

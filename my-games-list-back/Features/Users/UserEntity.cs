@@ -20,5 +20,17 @@ namespace my_games_list_back.Features.Users
             Email = email;
             Password = password;
         }
+
+        public static implicit operator UserEntity(UserResponse user)
+        {
+            return new UserEntity
+            {
+                Name = user.Name,
+                Nickname = user.NickName,
+                Birthday = user.BirthDay,
+                Email = user.Email,
+                // Password 
+            };
+        }
     }
 }

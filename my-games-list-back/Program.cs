@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using my_games_list_back.Data;
+using my_games_list_back.Repository;
+using my_games_list_back.Repository.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,17 +12,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//==============//
-//Configuracao do branco de dados,
-//Aqui ele vai pegar todas as informacoes dentro da string SQLConnectio
-//Essa string se encontra no json chamada "appSettings.json"
 
 builder.Services.AddDbContext<MyGameListContext>
 	(options => options.UseSqlServer
-	(builder.Configuration.GetConnectionString("SQLConnection"))); 
-//============//
+	(builder.Configuration.GetConnectionString("SQLConnection")));
 
-
+builder.Services.AddScoped<IBaseRepository, BaseRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

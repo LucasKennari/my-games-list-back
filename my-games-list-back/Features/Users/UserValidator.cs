@@ -1,11 +1,22 @@
 ﻿using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using my_games_list_back.Data;
+using System.Linq.Expressions;
+using System.Threading;
 
 namespace my_games_list_back.Features.Users
 {
     public class UserValidator : AbstractValidator<UserEntity>
     {
-        public UserValidator() 
+        private readonly MyGameListContext _context;
+
+        public UserValidator(MyGameListContext context)
+        {
+            _context = context;
+        }
+
+        public UserValidator()
         {
             RuleFor(x => x.Id)
                 .NotEmpty()
@@ -19,8 +30,9 @@ namespace my_games_list_back.Features.Users
             RuleFor(x => x.Nickname)
                 .NotEmpty()
                 .NotNull()
-                .MaximumLength(255);
-                //.Unique();
+                .MaximumLength(255)
+                .MustAsync(BeUniqueeNickname).WithMessage("Nickname alreaedy exists.");
+
 
             RuleFor(x => x.Birthday)
                 .NotEmpty()
@@ -52,6 +64,11 @@ namespace my_games_list_back.Features.Users
         {
             return !date.Equals(default(DateTime));
         }
-
+        private async Task<bool> BeUniqueeNickname(string nickname, CancellationToken cancellationToken)
+        {
+            return !await _context.Users.AnyAsync(u => u.Nickname == nickname, cancellationToken);
+        }
     }
+
+}
 }

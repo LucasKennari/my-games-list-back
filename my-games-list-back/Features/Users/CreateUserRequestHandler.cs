@@ -10,5 +10,6 @@ namespace my_games_list_back.Features.Users
         {
             _context = context;
         }
+
     }
 }

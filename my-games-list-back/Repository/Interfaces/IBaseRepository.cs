@@ -1,10 +1,12 @@
-﻿namespace my_games_list_back.Repository.Interfaces
+﻿using my_games_list_back.Data;
+
+namespace my_games_list_back.Repository.Interfaces
 {
-    public interface IBaseRepository
+    public interface IBaseRepository<T> where T : BaseEntity
     {
-        public void Add<T>(T entity) where T : class;
-        public void Update<T>(T entity) where T : class;
-        public void Delete<T>(T entity) where T : class;
+        public void Add(T entity);
+        public void Update(T entity);
+        public void Delete(T entity);
         bool SaveChanges();
     }
 }

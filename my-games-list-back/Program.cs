@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using my_games_list_back.Data;
-using my_games_list_back.Repository;
 using my_games_list_back.Repository.Interfaces;
 using System.Text.Json;
 using System.Text.Json.Serialization;

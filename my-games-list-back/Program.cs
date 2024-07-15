@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using my_games_list_back.Data;
+using my_games_list_back.Features.Users;
+using my_games_list_back.Helpers.PasswordHash;
+using my_games_list_back.Repository;
 using my_games_list_back.Repository.Interfaces;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -23,8 +26,9 @@ builder.Services.AddDbContext<MyGameListContext>
 	(options => options.UseSqlServer
 	(builder.Configuration.GetConnectionString("SQLConnection")));
 
-builder.Services.AddScoped<IBaseRepository, BaseRepository>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
+//builder.Services.AddScoped<IBaseRepository, BaseRepository>();
+builder.Services.AddSingleton<PasswordHash>();	
+//builder.Services.AddScoped<IBaseRepository<UserRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

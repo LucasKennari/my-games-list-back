@@ -19,6 +19,7 @@ namespace my_games_list_back.Features.Users
         
         public override void Add(UserEntity entity)
         {
+            entity.IsValid(_context);
             var passwordHash = _passwordHash.Hash(entity.Password);
             entity.SetPassword(passwordHash);
 

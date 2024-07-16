@@ -19,27 +19,22 @@ namespace my_games_list_back.Repository
                 await _context.SaveChangesAsync();       
         }
 
-        public async void Delete(T entity)
+        public async virtual void Delete(T entity)
         {
             _context.Set<T>().Remove(entity);
             _context.SaveChanges();
         }
 
-        public bool SaveChanges()
-        {
-           return _context.SaveChanges();
-        }
-
-        public async void Update(T entity)
+        public async virtual void Update(T entity)
         {
             _context.Set<T>().Update(entity);
             _context.SaveChanges();
         }
-        public async Task<IEnumerable<T>> GetAllAsync()
+        public async  virtual Task<IQueryable<T>> GetAllAsync()
         {
             throw new NotImplementedException();
         }
-        public async Task<T> GetByIdAsync(int id)
+        public async virtual Task<T> GetByIdAsync(Guid id)
         {
             throw new NotImplementedException();
         }

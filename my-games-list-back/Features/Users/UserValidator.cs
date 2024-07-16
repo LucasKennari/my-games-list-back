@@ -14,10 +14,7 @@ namespace my_games_list_back.Features.Users
         public UserValidator(MyGameListContext context)
         {
             _context = context;
-        }
 
-        public UserValidator()
-        {
             RuleFor(x => x.Id)
                 .NotEmpty()
                 .Must(id => id != Guid.Empty);

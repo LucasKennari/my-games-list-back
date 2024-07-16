@@ -18,24 +18,10 @@ namespace my_games_list_back.Features.Users
             Nickname = nickname;
             Birthday = birthday;
             Email = email;
-            Password = password;
-            IsValid();
+            Password = password;   
         }
 
-        public (bool isValid, string error) IsValid()
-        {
-            UserValidator userValidator = new UserValidator();
-            var result = userValidator.Validate(this);
-            var isValid = result.IsValid;
-            var error = result.ToString();
-
-            if (!isValid)            
-                throw new Exception(error);
-            
-            return (isValid, error);
-        }
-
-        public static implicit operator UserEntity(UserResponse user)
+        public static implicit operator UserEntity(UserRequest user)
         {
             return new UserEntity
             {
@@ -43,7 +29,7 @@ namespace my_games_list_back.Features.Users
                 Nickname = user.NickName,
                 Birthday = user.BirthDay,
                 Email = user.Email,
-                // Password 
+                Password = user.Password
             };
         }
 

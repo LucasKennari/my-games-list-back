@@ -28,8 +28,9 @@ builder.Services.AddDbContext<MyGameListContext>
 	(builder.Configuration.GetConnectionString("SQLConnection")));
 
 builder.Services.AddScoped<IBaseRepository<BaseEntity>, BaseRepository<BaseEntity>>();
-builder.Services.AddScoped<IBaseRepository<UserEntity>, UserRepository>();
 builder.Services.AddSingleton<PasswordHash>();	
+builder.Services.AddScoped<IBaseRepository<UserEntity>, UserRepository>();
+//builder.Services.AddScoped<IPasswordHash, PasswordHash>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

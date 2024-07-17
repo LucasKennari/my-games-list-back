@@ -12,7 +12,7 @@ namespace my_games_list_back.Features.Users
             var error = result.ToString();
 
             if (!isValid)
-                throw new Exception(error);
+                throw new ArgumentException(error);
 
             return (isValid, error);
         }

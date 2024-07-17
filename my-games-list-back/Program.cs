@@ -11,12 +11,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
-//AddJsonOptions(options =>
-//{
-//    options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-//    options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
-//});
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+    options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+});
+;
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -27,10 +27,11 @@ builder.Services.AddDbContext<MyGameListContext>
 	(options => options.UseSqlServer
 	(builder.Configuration.GetConnectionString("SQLConnection")));
 
-builder.Services.AddScoped<IBaseRepository<BaseEntity>, BaseRepository<BaseEntity>>();
-builder.Services.AddSingleton<PasswordHash>();	
+builder.Services.AddScoped<IPasswordHash, PasswordHash>();
+//builder.Services.AddSingleton<PasswordHash>();	
 builder.Services.AddScoped<IBaseRepository<UserEntity>, UserRepository>();
-//builder.Services.AddScoped<IPasswordHash, PasswordHash>();
+builder.Services.AddScoped<IBaseRepository<BaseEntity>, BaseRepository<BaseEntity>>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -44,10 +45,11 @@ app.UseHttpsRedirection();
 app.UseRouting();
 
 app.UseAuthorization();
-app.UseEndpoints(endpoints =>
+app.UseEndpoints(configure: endpoints =>
 {
 
-endpoints.MapControllers(); });
+endpoints.MapControllers();
+});
 
 
 app.Run();

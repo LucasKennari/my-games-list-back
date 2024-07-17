@@ -17,13 +17,14 @@ namespace my_games_list_back.Features.Users
             _passwordHash = passwordHash;
         }
         
-        public override void Add(UserEntity entity)
+        public async override Task<UserEntity> Add(UserEntity entity)
         {
-            entity.IsValid(_context);
+             await entity.IsValid(_context);
             var passwordHash = _passwordHash.Hash(entity.Password);
             entity.SetPassword(passwordHash);
 
-            base.Add(entity);
+            await base.Add(entity);
+            return entity;
         }
     }
 }

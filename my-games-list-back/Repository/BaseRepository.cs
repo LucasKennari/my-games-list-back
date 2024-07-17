@@ -6,35 +6,36 @@ namespace my_games_list_back.Repository
 {
     public class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
     {
-   
+
         private readonly MyGameListContext _context;
         public BaseRepository(MyGameListContext context)
         {
-            _context = context; 
+            _context = context;
         }
 
-        public async virtual void Add(T entity)
-        {           
-                await _context.Set<T>().AddAsync(entity);
-                await _context.SaveChangesAsync();       
+        public async virtual Task<T> Add(T entity)
+        {
+            await _context.Set<T>().AddAsync(entity);
+            await _context.SaveChangesAsync();
+            return entity;
         }
 
-        public async virtual void Delete(T entity)
+        public virtual void Delete(T entity)
         {
             _context.Set<T>().Remove(entity);
             _context.SaveChanges();
         }
 
-        public async virtual void Update(T entity)
+        public virtual void Update(T entity)
         {
             _context.Set<T>().Update(entity);
             _context.SaveChanges();
         }
-        public async  virtual Task<IQueryable<T>> GetAllAsync()
+        public virtual Task<IQueryable<T>> GetAllAsync()
         {
             throw new NotImplementedException();
         }
-        public async virtual Task<T> GetByIdAsync(Guid id)
+        public virtual Task<T> GetByIdAsync(Guid id)
         {
             throw new NotImplementedException();
         }

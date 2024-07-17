@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using my_games_list_back.Data;
 using my_games_list_back.Features.Users;
+using my_games_list_back.Repository.Interfaces;
 
 namespace my_games_list_back.Controllers
 {
@@ -10,44 +11,46 @@ namespace my_games_list_back.Controllers
     public class UsersController : ControllerBase
     {
         private readonly UserRepository _repository;
-
-        public UsersController(UserRepository repository)
+        private readonly IBaseRepository<UserEntity> _userRepository;
+        public UsersController(IBaseRepository<UserEntity> userRepository)
         {
-            _repository = repository;
+            //repository = repository;
+            _userRepository = userRepository;
         }
-
-        // GET api/products
+        /*
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
             return new string[] { "Product1", "Product2" };
         }
-
+       */
         // GET api/products/5
-        [HttpGet(Name = "RogerinhoDoQuero")]
+        [HttpGet]
         public ActionResult<string> Get(int id)
         {
             return "Product" + id;
         }
 
-        // POST api/products
+
+        // POST api/users
         [HttpPost]
-        public IActionResult CreateUser([FromBody] UserRequest user)
+        public async Task<ActionResult> CreateUser([FromBody] UserRequest? user)
         {
-            if (user == null)
-            {
-                throw new ArgumentNullException("user");
-            }
-            UserEntity userEntity = user;
             try
             {
-                _repository.Add(userEntity);
+                if (user == null)
+                {
+                    return BadRequest("Usuario nulo");
+                }
+                 UserEntity userEntity = user;
+               await _userRepository.Add(userEntity);
+
+                return Ok();
             }
             catch (ArgumentException ex)
             {
                 return BadRequest(ex.Message);
             }
-            return Ok();
         }
 
         // PUT api/products/5

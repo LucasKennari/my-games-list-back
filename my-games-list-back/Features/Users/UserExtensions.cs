@@ -7,13 +7,15 @@ namespace my_games_list_back.Features.Users
         public async static Task<(bool isValid, string error)> IsValid(this UserEntity userEntity, MyGameListContext context)
         {
             UserValidator userValidator = new UserValidator(context);
-            var result =  userValidator.ValidateAsync(userEntity);
-            var isValid = (await result).IsValid;
-            var error = result.ToString();
+            var result =  await userValidator.ValidateAsync(userEntity);
+            var isValid = result.IsValid;
+            var error = string.Empty;
 
             if (!isValid)
+            {
+                error = string.Join(",",result.Errors.Select(x => x.ErrorMessage));
                 throw new ArgumentException(error);
-
+            }
             return (isValid, error);
         }
     }

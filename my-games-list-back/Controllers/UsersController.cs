@@ -34,7 +34,7 @@ namespace my_games_list_back.Controllers
 
         // POST api/users
         [HttpPost]
-        public async Task<ActionResult> CreateUser([FromBody] UserRequest? user)
+        public async Task<IActionResult> CreateUser([FromBody] UserRequest? user)
         {
             try
             {
@@ -43,7 +43,7 @@ namespace my_games_list_back.Controllers
                     return BadRequest("Usuario nulo");
                 }
                  UserEntity userEntity = user;
-               await _userRepository.Add(userEntity);
+                await _userRepository.AddAsync(userEntity);
 
                 return Ok();
             }

@@ -2,13 +2,13 @@
 {
     public abstract class BaseEntity
     {
-        public Guid Id { get; private set; }
+        public Guid Id { get; protected set; }
 
         public bool IsActive { get; private set; }
 
-        public DateTime CreatedAt { get; private set; }
+        public DateTime CreatedAt { get; set; }
 
-        public DateTime UpdatedAt { get; private set; }
+        public DateTime UpdatedAt { get; set; }
 
         protected BaseEntity() { }
 

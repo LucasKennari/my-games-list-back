@@ -8,7 +8,7 @@ namespace my_games_list_back.Repository.Interfaces
         Task<IQueryable<T>> GetAllAsync();
         Task<T> GetByIdAsync(Guid id);
 
-        public Task<T> Add(T entity);
+        public Task<T> AddAsync(T entity);
         public void Update(T entity);
         public void Delete(T entity);
     }

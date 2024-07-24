@@ -25,6 +25,7 @@ namespace my_games_list_back.Features.Users
         {
             return new UserEntity
             {
+                Id = Guid.NewGuid(),
                 Name = user.Name,
                 Nickname = user.NickName,
                 Birthday = user.BirthDay,

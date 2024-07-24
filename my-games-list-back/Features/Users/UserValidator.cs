@@ -28,7 +28,7 @@ namespace my_games_list_back.Features.Users
                 .NotEmpty()
                 .NotNull()
                 .MaximumLength(255)
-                .MustAsync(BeUniqueeNickname).WithMessage("Nickname alreaedy exists.");
+                .MustAsync(BeUniqueNickname).WithMessage("Nickname already exists.");
 
 
             RuleFor(x => x.Birthday)
@@ -40,7 +40,8 @@ namespace my_games_list_back.Features.Users
                 .NotNull()
                 .NotEmpty()
                 .MaximumLength(255)
-                .EmailAddress();
+                .EmailAddress()
+                .MustAsync(BeUniqueEmail).WithMessage("E-mail already exists.");
 
 
             RuleFor(x => x.Password)
@@ -52,18 +53,19 @@ namespace my_games_list_back.Features.Users
                 .Matches("[0-9]").WithMessage("Password must contain at least one number")
                 .Matches("[^a-zA-Z0-9]").WithMessage("Password must contain at least one special character");
 
-            RuleFor(x => x.CreatedAt)
-                .NotEmpty()
-                .LessThanOrEqualTo(DateTime.Now);
         }
 
         private bool BeaValidDate(DateTime date)
         {
             return !date.Equals(default(DateTime));
         }
-        private async Task<bool> BeUniqueeNickname(string nickname, CancellationToken cancellationToken)
+        private async Task<bool> BeUniqueNickname(string nickname, CancellationToken cancellationToken)
         {
             return !await _context.Users.AnyAsync(u => u.Nickname == nickname, cancellationToken);
+        }
+        private async Task<bool> BeUniqueEmail(string email, CancellationToken cancellationToken)
+        {
+            return !await _context.Users.AnyAsync(u => u.Email == email, cancellationToken);
         }
     }
 

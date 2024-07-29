@@ -18,6 +18,24 @@ namespace my_games_list_back.Features.Users
             Nickname = nickname;
             Birthday = birthday;
             Email = email;
+            Password = password;   
+        }
+
+        public static implicit operator UserEntity(UserRequest user)
+        {
+            return new UserEntity
+            {
+                Id = Guid.NewGuid(),
+                Name = user.Name,
+                Nickname = user.NickName,
+                Birthday = user.BirthDay,
+                Email = user.Email,
+                Password = user.Password
+            };
+        }
+
+        public void SetPassword(string password)
+        {
             Password = password;
         }
     }

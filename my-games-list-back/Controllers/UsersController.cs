@@ -24,7 +24,8 @@ namespace my_games_list_back.Controllers
             return new string[] { "Product1", "Product2" };
         }
        */
-        // GET api/products/5
+
+        // GET api/users
         [HttpGet]
         public ActionResult<string> Get(int id)
         {
@@ -61,8 +62,13 @@ namespace my_games_list_back.Controllers
 
         // DELETE api/products/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> DeleteUser(string id)
         {
+            //verificar se o usuario está ativo
+            var user = await _userRepository.GetByIdAsync
+            //funcao delete usuario deve transforma o ActiveUSER em false.
+          
+            return Empty;
         }
     }
 }

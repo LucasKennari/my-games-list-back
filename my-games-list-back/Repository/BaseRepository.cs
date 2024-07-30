@@ -35,9 +35,10 @@ namespace my_games_list_back.Repository
         {
             throw new NotImplementedException();
         }
-        public virtual Task<T> GetByIdAsync(Guid id)
+        public virtual async Task<T> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+
+            return await _context.Set<T>().FindAsync(id);
         }
 
         public virtual async Task<T> AddAsync(T entity)

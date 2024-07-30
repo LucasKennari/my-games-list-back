@@ -26,10 +26,5 @@ namespace my_games_list_back.Features.Users
             await base.AddAsync(entity);
             return entity;
         }
-        public async override Task<UserEntity> GetByIdAsync(Guid id)
-        {
-            var user = await base.GetByIdAsync(id);
-            return user;
-        }
     }
 }

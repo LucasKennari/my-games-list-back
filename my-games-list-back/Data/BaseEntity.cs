@@ -4,7 +4,7 @@
     {
         public Guid Id { get; protected set; }
 
-        public bool IsActive { get; private set; }
+        public bool IsActive { get; protected set; }
 
         public DateTime CreatedAt { get; set; }
 
@@ -18,6 +18,11 @@
             IsActive = isActive;
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
+        }
+
+        public void SetIsActive(bool flag)
+        {
+            IsActive = flag;
         }
     }
 }

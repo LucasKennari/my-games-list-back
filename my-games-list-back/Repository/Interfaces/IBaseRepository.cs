@@ -11,5 +11,6 @@ namespace my_games_list_back.Repository.Interfaces
         public Task<T> AddAsync(T entity);
         public void Update(T entity);
         public void Delete(T entity);
+        public Task LogicDeleteAsync(Guid id);
     }
 }

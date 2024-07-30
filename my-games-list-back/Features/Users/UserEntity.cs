@@ -30,7 +30,8 @@ namespace my_games_list_back.Features.Users
                 Nickname = user.NickName,
                 Birthday = user.BirthDay,
                 Email = user.Email,
-                Password = user.Password
+                Password = user.Password,
+                IsActive = true
             };
         }
 

@@ -35,6 +35,15 @@ namespace my_games_list_back.Features.Users
             };
         }
 
+        public void Update(UserRequest request)
+        {
+            Name = request.Name;
+            Nickname = request.NickName;
+            Birthday = request.BirthDay;
+            Email = request.Email;
+            IsActive = request.IsActive;
+        }
+
         public void SetPassword(string password)
         {
             Password = password;

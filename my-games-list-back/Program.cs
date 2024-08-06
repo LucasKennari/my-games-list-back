@@ -29,7 +29,7 @@ builder.Services.AddDbContext<MyGameListContext>
 
 builder.Services.AddScoped<IPasswordHash, PasswordHash>();
 //builder.Services.AddSingleton<PasswordHash>();	
-builder.Services.AddScoped<IBaseRepository<UserEntity>, UserRepository>();
+builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<IBaseRepository<BaseEntity>, BaseRepository<BaseEntity>>();
 
 var app = builder.Build();

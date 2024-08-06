@@ -11,8 +11,8 @@ namespace my_games_list_back.Controllers
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
-        private readonly IBaseRepository<UserEntity> _userRepository;
-        public UsersController(IBaseRepository<UserEntity> userRepository)
+        private readonly UserRepository _userRepository;
+        public UsersController(UserRepository userRepository)
         {
 
             _userRepository = userRepository;
@@ -86,9 +86,27 @@ namespace my_games_list_back.Controllers
         }
 
         // PUT api/products/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public async Task<IActionResult> Put([FromBody] UserRequest? userRequest)
         {
+            try
+            {
+                if (userRequest == null)                          
+                {
+                    return NotFound();
+                }
+                var user = await _userRepository.GetByIdAsync(userRequest.Id);
+                if (user == null)
+                {
+                    return NotFound();
+                }
+                await _userRepository.UpdateAsync(userRequest);
+                return Ok();
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // DELETE api/users/{Guid}

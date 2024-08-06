@@ -3,10 +3,13 @@
     public class UserRequest
     {
         public string Name { get; set; }
+        public Guid Id { get; set; }
         public string NickName { get; set; }
         public DateTime BirthDay { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public bool IsActive { get; set; }
+
 
 
     }

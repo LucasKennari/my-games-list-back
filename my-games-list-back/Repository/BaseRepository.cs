@@ -36,7 +36,7 @@ namespace my_games_list_back.Repository
 
         public virtual void Update(T entity)
         {
-            _context.Set<T>().Update(entity);
+        //    _context.Set<T>().Update(entity);
             _context.SaveChanges();
         }
         public virtual Task<IQueryable<T>> GetAllAsync()

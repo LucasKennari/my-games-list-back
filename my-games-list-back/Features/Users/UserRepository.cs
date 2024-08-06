@@ -36,5 +36,16 @@ namespace my_games_list_back.Features.Users
             
           
         }
+        public async Task<bool> UpdateAsync(UserRequest request)
+        {
+            var userEntity = await _context.Users.FindAsync(request.Id);
+            if (userEntity == null)
+            {
+                return false;
+            }            
+            userEntity.Update(request);
+            base.Update(request);
+            return true;
+        }
     }
 }

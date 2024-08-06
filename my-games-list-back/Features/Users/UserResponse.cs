@@ -1,4 +1,5 @@
-﻿namespace my_games_list_back.Features.Users
+﻿
+namespace my_games_list_back.Features.Users
 {
     public class UserResponse
     {
@@ -22,6 +23,11 @@
                 CreatedAt = user.CreatedAt
 
             };
+        }
+
+        public static implicit operator UserResponse(Task<IQueryable<UserEntity>> v)
+        {
+            throw new NotImplementedException();
         }
     }
 }

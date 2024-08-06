@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using my_games_list_back.Data;
 using my_games_list_back.Features.Users;
 using my_games_list_back.Repository.Interfaces;
+using System.Linq.Expressions;
 
 namespace my_games_list_back.Controllers
 {
@@ -10,26 +11,56 @@ namespace my_games_list_back.Controllers
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
-        private readonly UserRepository _repository;
         private readonly IBaseRepository<UserEntity> _userRepository;
         public UsersController(IBaseRepository<UserEntity> userRepository)
         {
-            //repository = repository;
+
             _userRepository = userRepository;
         }
-        /*
-        [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
-        {
-            return new string[] { "Product1", "Product2" };
-        }
-       */
 
         // GET api/users
         [HttpGet]
-        public ActionResult<string> Get(Guid id)
+        public async Task<IActionResult> GetUsers()
         {
-            return "Product" + id;
+            var users = await _userRepository.GetAllAsync();
+
+            List<UserResponse> userListResponse = users.Select(u => (UserResponse)u).ToList();
+            try
+            {
+                if (users == null)
+                {
+                    return NotFound("Users not found");
+                }
+
+                return Ok(userListResponse);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+        // GET api/user/{Guid}
+        [HttpGet("{Guid}")]
+        public async Task<IActionResult> GetUser(Guid id)
+        {
+            var user = await _userRepository.GetByIdAsync(id);
+            try
+            {
+                if (user == null)
+                {
+                    return NotFound("User not found");
+                }
+
+                UserResponse userResponse = user;
+                return Ok(userResponse);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
         }
 
 
@@ -43,7 +74,7 @@ namespace my_games_list_back.Controllers
                 {
                     return BadRequest("Usuario nulo");
                 }
-                 UserEntity userEntity = user;
+                UserEntity userEntity = user;
                 await _userRepository.AddAsync(userEntity);
 
                 return Ok();
@@ -60,7 +91,7 @@ namespace my_games_list_back.Controllers
         {
         }
 
-        // DELETE api/products/5
+        // DELETE api/users/{Guid}
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(Guid id)
         {
@@ -72,7 +103,7 @@ namespace my_games_list_back.Controllers
             catch (ArgumentException ex)
             {
 
-                return BadRequest("Usuario nulo");
+                return BadRequest(ex.Message);
             }
             return Ok();
         }
